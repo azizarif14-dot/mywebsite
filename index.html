@@ -84,47 +84,6 @@
         radial-gradient(circle at 55% 42%, rgba(196,149,63,0.08), transparent 45%);
       background-attachment: fixed;
       transition: background-color 0.3s ease, color 0.3s ease;
-      cursor: none; /* hide default — custom cursor active */
-    }
-
-    /* ============================================================
-       CUSTOM GLOWING CURSOR
-    ============================================================ */
-    .cursor-dot {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--primary);
-      pointer-events: none;
-      z-index: 10000;
-      transform: translate(-50%, -50%);
-      transition: background 0.3s, transform 0.15s ease, width 0.2s, height 0.2s;
-      mix-blend-mode: multiply;
-    }
-    :root[data-theme="dark"] .cursor-dot {
-      mix-blend-mode: screen;
-    }
-    .cursor-ring {
-      position: fixed;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1.5px solid var(--primary);
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      opacity: 0.55;
-      transition: border-color 0.3s, opacity 0.3s, transform 0.08s linear, width 0.25s, height 0.25s;
-    }
-    /* Cursor grows on hoverable elements */
-    body.cursor-hover .cursor-dot  { width: 12px; height: 12px; }
-    body.cursor-hover .cursor-ring { width: 52px; height: 52px; opacity: 0.35; }
-
-    @media (pointer: coarse) {
-      /* Touch devices: restore default cursor */
-      body { cursor: auto; }
-      .cursor-dot, .cursor-ring { display: none; }
     }
 
     /* ============================================================
@@ -166,10 +125,9 @@
       color: var(--foreground);
       text-decoration: none;
       transition: color 0.2s, opacity 0.2s;
-      cursor: none;
     }
     a:hover { color: var(--primary); }
-    button { cursor: none; }
+    button { cursor: pointer; }
     img { max-width: 100%; height: auto; display: block; }
 
     /* ============================================================
@@ -275,7 +233,7 @@
       color: var(--foreground);
       width: 2.4rem; height: 2.4rem;
       border-radius: 50%;
-      cursor: none;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -901,7 +859,7 @@
       border-radius: 50%;
       border: 2px solid var(--primary);
       background: transparent;
-      cursor: none;
+      cursor: pointer;
       padding: 0;
       transition: all 0.3s ease;
     }
@@ -994,7 +952,7 @@
       border-radius: 50%;
       background: var(--primary-gradient);
       border: none;
-      cursor: none;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1059,8 +1017,7 @@
         opacity: 1 !important;
         transform: none !important;
       }
-      body { cursor: auto !important; }
-      .cursor-dot, .cursor-ring { display: none !important; }
+      body { }
     }
 
     /* ============================================================
@@ -1107,9 +1064,6 @@
 </head>
 <body>
 
-  <!-- Custom cursor elements -->
-  <div class="cursor-dot"  id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- Dark-mode background glow orbs -->
   <div class="bg-glow glow-1"></div>
@@ -1412,7 +1366,6 @@
           <p class="mb-8" data-animate>In a remote healing session, no distance is real. A phone call from Islamabad to anywhere on Earth is enough, because the healing does not travel through wires — it travels through the entangled fabric of being.</p>
           <blockquote class="mx-auto" data-animate>
             "The spirit of man is the lamp of the Lord, searching all the inward parts."
-            <footer>— Proverbs 20:27</footer>
           </blockquote>
         </div>
       </div>
@@ -1665,36 +1618,6 @@
        JAVASCRIPT
   ============================================================ -->
   <script>
-    /* ===== CUSTOM GLOWING CURSOR ===== */
-    const dot  = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    let ringX = 0, ringY = 0, dotX = 0, dotY = 0;
-    let raf;
-
-    document.addEventListener('mousemove', e => {
-      dotX = e.clientX;
-      dotY = e.clientY;
-      dot.style.left  = dotX + 'px';
-      dot.style.top   = dotY + 'px';
-    });
-
-    // Ring follows with slight lag
-    function animateRing() {
-      ringX += (dotX - ringX) * 0.14;
-      ringY += (dotY - ringY) * 0.14;
-      ring.style.left = ringX + 'px';
-      ring.style.top  = ringY + 'px';
-      raf = requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    // Grow cursor on interactive elements
-    const hoverables = 'a, button, .card, .gallery-item, .sacred-fig, figure.rounded, .dot-btn';
-    document.querySelectorAll(hoverables).forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
-
     /* ===== HEADER SCROLL SHADOW ===== */
     const siteHeader = document.getElementById('siteHeader');
     window.addEventListener('scroll', () => {
