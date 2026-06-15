@@ -2022,6 +2022,12 @@
               </div>
               <div class="form-group mb-4">
                 <input type="text" id="formCountry" required placeholder="Your Country" class="form-input">
+                <div class="form-group mb-4">
+                  <input type="text" id="formCity" required placeholder="Your City" class="form-input">
+                </div>
+                <div class="form-group mb-4">
+                  <input type="tel" id="formContact" required placeholder="Contact Number" class="form-input">
+                </div>
               </div>
               <div class="form-group mb-4">
                 <textarea id="formMessage" required placeholder="A brief note on what you seek..." class="form-input" rows="3"></textarea>
@@ -2233,52 +2239,116 @@
       mainGain.gain.setValueAtTime(0, audioCtx.currentTime);
       mainGain.connect(audioCtx.destination);
 
-      // Deep healing vibration drone (108Hz base)
+      // Deep healing drone (136.1Hz Ohm base — pure, no vibration)
       droneOsc1 = audioCtx.createOscillator();
-      droneOsc2 = audioCtx.createOscillator();
+      const droneOsc3 = audioCtx.createOscillator();
       const filter = audioCtx.createBiquadFilter();
 
       droneOsc1.type = 'sine';
-      droneOsc1.frequency.setValueAtTime(108, audioCtx.currentTime);
+      droneOsc1.frequency.setValueAtTime(136.1, audioCtx.currentTime);
 
-      droneOsc2.type = 'triangle';
-      droneOsc2.frequency.setValueAtTime(108.4, audioCtx.currentTime); // Slight beating detune
+      droneOsc3.type = 'sine';
+      droneOsc3.frequency.setValueAtTime(272.2, audioCtx.currentTime); // Octave up
 
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(160, audioCtx.currentTime);
+      filter.frequency.setValueAtTime(350, audioCtx.currentTime);
 
       const droneGain = audioCtx.createGain();
-      droneGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+      droneGain.gain.setValueAtTime(0.30, audioCtx.currentTime);
 
       droneOsc1.connect(droneGain);
-      droneOsc2.connect(droneGain);
+      droneOsc3.connect(droneGain);
       droneGain.connect(filter);
       filter.connect(mainGain);
 
-      // Singing bowl resonance harmonic (216Hz)
+      // Singing bowl resonance harmonic (272.2Hz) — pure, steady tone
       bowlOsc = audioCtx.createOscillator();
       bowlOsc.type = 'sine';
-      bowlOsc.frequency.setValueAtTime(216, audioCtx.currentTime);
-
-      // Slow breathing LFO modulation
-      const lfo = audioCtx.createOscillator();
-      lfo.frequency.setValueAtTime(0.08, audioCtx.currentTime); // 12.5s cycle
-      
-      const lfoGain = audioCtx.createGain();
-      lfoGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      bowlOsc.frequency.setValueAtTime(272.2, audioCtx.currentTime);
 
       const bowlGain = audioCtx.createGain();
-      bowlGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+      bowlGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
 
-      lfo.connect(lfoGain);
-      lfoGain.connect(bowlGain.gain);
       bowlOsc.connect(bowlGain);
       bowlGain.connect(mainGain);
 
       droneOsc1.start();
-      droneOsc2.start();
+      droneOsc3.start();
       bowlOsc.start();
-      lfo.start();
+    }
+
+    /* ===== WIND CHIME SYNTHESIZER ===== */
+    // Pentatonic-scale frequencies for a harmonious chime set (Hz)
+    const CHIME_FREQS = [1174.66, 1318.51, 1479.98, 1760.00, 1975.53, 2093.00, 2349.32, 2637.02];
+    let chimeInterval = null;
+
+    function playChimeTone(freq, delaySeconds, volume) {
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime + delaySeconds;
+
+      // Pure sine bell tone — clean, no vibration
+      const osc = audioCtx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+
+      // Gain envelope: sharp attack, smooth exponential decay
+      const gainNode = audioCtx.createGain();
+      gainNode.gain.setValueAtTime(0, now);
+      gainNode.gain.linearRampToValueAtTime(volume, now + 0.008);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 3.2);
+
+      // Soft reverb echo
+      const delay = audioCtx.createDelay(0.5);
+      delay.delayTime.setValueAtTime(0.22, now);
+      const delayGain = audioCtx.createGain();
+      delayGain.gain.setValueAtTime(0.10, now);
+
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      gainNode.connect(delay);
+      delay.connect(delayGain);
+      delayGain.connect(audioCtx.destination);
+
+      osc.start(now);
+      osc.stop(now + 3.5);
+    }
+
+    function playChimeCascade() {
+      // Play 5–7 chimes with staggered timing
+      const count = 5 + Math.floor(Math.random() * 3);
+      for (let i = 0; i < count; i++) {
+        const freq = CHIME_FREQS[Math.floor(Math.random() * CHIME_FREQS.length)];
+        const delay = i * (0.18 + Math.random() * 0.22);
+        const vol  = 0.05 + Math.random() * 0.04; // soft cascade
+        playChimeTone(freq, delay, vol);
+      }
+    }
+
+    function playSingleChime() {
+      const freq = CHIME_FREQS[Math.floor(Math.random() * CHIME_FREQS.length)];
+      const vol  = 0.04 + Math.random() * 0.03; // very quiet single chime
+      playChimeTone(freq, 0, vol);
+    }
+
+    function startRandomChimes() {
+      stopRandomChimes();
+      function scheduleNext() {
+        const wait = (4 + Math.random() * 9) * 1000; // 4–13 seconds between hits
+        chimeInterval = setTimeout(() => {
+          if (isPlayingAmbient) {
+            playSingleChime();
+            scheduleNext();
+          }
+        }, wait);
+      }
+      scheduleNext();
+    }
+
+    function stopRandomChimes() {
+      if (chimeInterval) {
+        clearTimeout(chimeInterval);
+        chimeInterval = null;
+      }
     }
 
     ambientToggleBtn.addEventListener('click', () => {
@@ -2290,17 +2360,23 @@
       }
 
       if (!isPlayingAmbient) {
-        mainGain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 2.0);
+        mainGain.gain.linearRampToValueAtTime(0.28, audioCtx.currentTime + 3.0); // soft, gentle fade in
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'block';
         ambientToggleBtn.classList.add('playing');
         isPlayingAmbient = true;
+        // Play opening chime cascade then schedule random chimes
+        playChimeCascade();
+        setTimeout(startRandomChimes, 2500);
       } else {
         mainGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
         playIcon.style.display = 'block';
         pauseIcon.style.display = 'none';
         ambientToggleBtn.classList.remove('playing');
         isPlayingAmbient = false;
+        stopRandomChimes();
+        // Play a gentle farewell chime
+        playSingleChime();
       }
     });
 
