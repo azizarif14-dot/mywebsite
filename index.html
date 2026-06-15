@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Entanglement Healing — Saint Tajammal</title>
+  <meta name="description" content="Remote distance healing from Islamabad by Saint Tajammal, channelled through revealed verses of the Torah, Zabur, Injeel and the Quran. For the lost souls and seekers of light.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #faf6ef;
+      --foreground: #2d2318;
+      --card: #fdfcfa;
+      --card-foreground: #2d2318;
+      --primary: #8b5a2b;
+      --primary-foreground: #fdfcfa;
+      --muted: #f0ebe3;
+      --muted-foreground: #6b5d4d;
+      --accent: #c4953f;
+      --accent-foreground: #1a140c;
+      --border: #e0d6c8;
+      --radius: 1rem;
+      --font-display: "Cormorant Garamond", Georgia, serif;
+      --font-body: "Lora", Georgia, serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--foreground);
+      line-height: 1.7;
+      background-image:
+        radial-gradient(circle at 20% 10%, rgba(200, 160, 100, 0.15), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(180, 140, 80, 0.12), transparent 55%);
+      background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* Header / Nav */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(250, 246, 239, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .brand-sub {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--muted-foreground);
+      margin-top: 0.25rem;
+    }
+    nav { display: flex; gap: 1.5rem; font-size: 0.9rem; font-weight: 500; }
+    nav a { color: var(--foreground); }
+    nav a:hover { color: var(--primary); }
+
+    /* Sections */
+    section { padding: 5rem 1.5rem; }
+    .container { max-width: 72rem; margin: 0 auto; }
+    .text-center { text-align: center; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--muted-foreground);
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #a0522d, #c4953f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: opacity 0.2s;
+      border: none;
+      font-size: 0.95rem;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #a0522d, #c4953f);
+      color: var(--primary-foreground);
+    }
+    .btn-primary:hover { opacity: 0.9; text-decoration: none; }
+    .btn-outline {
+      background: rgba(253, 252, 250, 0.6);
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+    }
+    .btn-outline:hover { background: var(--card); text-decoration: none; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 10px 40px -10px rgba(139, 90, 43, 0.15);
+    }
+
+    .gradient-warm {
+      background: linear-gradient(135deg, rgba(250, 246, 239, 1), rgba(232, 218, 190, 1));
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 7rem 1.5rem;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(250, 246, 239, 0.6), rgba(250, 246, 239, 0.8), var(--background));
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted-foreground);
+      max-width: 36rem;
+      margin: 1.5rem auto 0;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    /* Section labels */
+    .section-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+    }
+
+    /* Grids */
+    .grid-2 { display: grid; gap: 1.5rem; }
+    .grid-3 { display: grid; gap: 1.5rem; }
+    .grid-4 { display: grid; gap: 1rem; }
+
+    @media (min-width: 768px) {
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .two-col {
+      display: grid;
+      gap: 3rem;
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .two-col { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Figures */
+    figure.rounded img {
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 40px -10px rgba(139, 90, 43, 0.15);
+      border: 1px solid var(--border);
+    }
+
+    /* Blockquotes */
+    blockquote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.5rem;
+      line-height: 1.5;
+    }
+    blockquote footer {
+      font-family: var(--font-body);
+      font-style: normal;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-top: 1rem;
+    }
+
+    /* Gallery */
+    .gallery-item {
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 40px -10px rgba(139, 90, 43, 0.15);
+    }
+    .gallery-item .aspect {
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-caption {
+      padding: 1.25rem;
+    }
+    .gallery-caption h3 {
+      font-size: 1.25rem;
+    }
+    .gallery-caption p {
+      font-size: 0.85rem;
+      color: var(--muted-foreground);
+      margin-top: 0.25rem;
+      font-style: italic;
+    }
+
+    /* Sacred preview figures */
+    .sacred-fig {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 40px -10px rgba(139, 90, 43, 0.15);
+      aspect-ratio: 3 / 4;
+    }
+    .sacred-fig img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .sacred-fig:hover img { transform: scale(1.05); }
+    .sacred-fig figcaption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem 1rem 1rem;
+      background: linear-gradient(to top, var(--background), rgba(250, 246, 239, 0.8), transparent);
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      background: rgba(240, 235, 227, 0.5);
+      padding: 2.5rem 1.5rem;
+    }
+    .footer-grid {
+      display: grid;
+      gap: 2rem;
+      max-width: 72rem;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .footer-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .footer-grid h4 {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .footer-grid p, .footer-grid a {
+      font-size: 0.85rem;
+      color: var(--muted-foreground);
+    }
+    .copyright {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Utility */
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .mb-12 { margin-bottom: 3rem; }
+    .mb-16 { margin-bottom: 4rem; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mt-4 { margin-top: 1rem; }
+    .mt-6 { margin-top: 1.5rem; }
+    .mt-8 { margin-top: 2rem; }
+    .mt-10 { margin-top: 2.5rem; }
+    .mt-12 { margin-top: 3rem; }
+    .mt-16 { margin-top: 4rem; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .max-w-2xl { max-width: 36rem; }
+    .max-w-3xl { max-width: 42rem; }
+    .max-w-4xl { max-width: 48rem; }
+    .text-sm { font-size: 0.875rem; }
+    .text-lg { font-size: 1.125rem; }
+    .text-xl { font-size: 1.25rem; }
+    .text-2xl { font-size: 1.5rem; }
+    .text-3xl { font-size: 1.875rem; }
+    .text-4xl { font-size: 2.25rem; }
+    .text-5xl { font-size: 3rem; }
+    .leading-relaxed { line-height: 1.8; }
+    .italic { font-style: italic; }
+    .border-y { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .border-t { border-top: 1px solid var(--border); }
+    .bg-muted { background: rgba(240, 235, 227, 0.4); }
+    .break-all { word-break: break-all; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="#home">
+        <div class="brand-title">Quantum Entanglement</div>
+        <div class="brand-sub">Healing</div>
+      </a>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#gallery">Sacred Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <div id="home">
+    <section class="hero">
+      <div class="hero-bg">
+        <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/d7e391a9-81c2-4a38-9f73-47b95fd2fa23/moses-tree.jpg" alt="">
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="container">
+        <div class="badge" style="margin-bottom: 2rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          Remote Distance Healing · Islamabad
+        </div>
+        <h1>Quantum Entanglement <span class="text-gradient italic">Healing</span></h1>
+        <p>A sanctuary for the lost souls and those who seek to tune their spirits — guided by the revealed verses of the Torah, Zabur, Injeel, and the Holy Qur'an.</p>
+        <div class="hero-actions">
+          <a href="mailto:magellanicconnect@gmail.com" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Book a Session
+          </a>
+          <a href="#about" class="btn btn-outline">Meet Saint Tajammal</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="text-center">
+      <div class="container" style="max-width: 48rem;">
+        <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/9e300efd-3fba-4fc6-859a-e3927721b01d/allah.jpg" alt="Allah" style="width: 5rem; height: 5rem; margin: 0 auto 2rem; object-fit: contain; opacity: 0.9;">
+        <blockquote>"He heals the brokenhearted and binds up their wounds."</blockquote>
+        <footer style="margin-top: 1rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent);">— Psalm 147:3</footer>
+      </div>
+    </section>
+
+    <section class="bg-muted border-y">
+      <div class="container">
+        <div class="text-center mb-16">
+          <div class="section-label">The Practice</div>
+          <h2 class="text-4xl mt-2">Healing Across Any Distance</h2>
+          <p class="mt-4 text-muted-foreground max-w-2xl mx-auto">All sessions are conducted over the phone. There is no need to travel — the spirit knows no geography. Verses from the revealed texts are recited and directed toward your healing.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <div class="text-gradient" style="font-family: var(--font-display); font-size: 3rem; line-height: 1;">I</div>
+            <h3 class="text-2xl mt-4">Reach Out</h3>
+            <p class="text-muted-foreground mt-2">Write to magellanicconnect@gmail.com to share your concern and book a time.</p>
+          </div>
+          <div class="card">
+            <div class="text-gradient" style="font-family: var(--font-display); font-size: 3rem; line-height: 1;">II</div>
+            <h3 class="text-2xl mt-4">Receive the Call</h3>
+            <p class="text-muted-foreground mt-2">Saint Tajammal connects with you by phone from Islamabad, Pakistan.</p>
+          </div>
+          <div class="card">
+            <div class="text-gradient" style="font-family: var(--font-display); font-size: 3rem; line-height: 1;">III</div>
+            <h3 class="text-2xl mt-4">The Verses Flow</h3>
+            <p class="text-muted-foreground mt-2">Revealed verses from the four sacred books are channelled toward your healing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="text-center mb-12">
+          <div class="section-label">From the Revealed Texts</div>
+          <h2 class="text-4xl mt-2">Words That Heal</h2>
+        </div>
+        <div class="grid-2">
+          <div class="card gradient-warm">
+            <blockquote>"He heals the brokenhearted and binds up their wounds."</blockquote>
+            <footer style="color: var(--primary); margin-top: 1rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em;">— Psalm 147:3</footer>
+          </div>
+          <div class="card gradient-warm">
+            <blockquote>"And We send down of the Qur'an that which is healing and mercy for the believers."</blockquote>
+            <footer style="color: var(--primary); margin-top: 1rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em;">— Qur'an 17:82</footer>
+          </div>
+          <div class="card gradient-warm">
+            <blockquote>"The spirit of man is the lamp of the Lord, searching all the inward parts."</blockquote>
+            <footer style="color: var(--primary); margin-top: 1rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em;">— Proverbs 20:27</footer>
+          </div>
+          <div class="card gradient-warm">
+            <blockquote>"Verily, in the remembrance of God do hearts find rest."</blockquote>
+            <footer style="color: var(--primary); margin-top: 1rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em;">— Qur'an 13:28</footer>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-muted border-y">
+      <div class="container">
+        <div class="text-center mb-12">
+          <div class="section-label">One Light, Many Lamps</div>
+          <h2 class="text-4xl mt-2">The Messengers of Mercy</h2>
+          <p class="mt-4 text-muted-foreground max-w-2xl mx-auto">We honour the prophets and sages through whom the healing Word has reached humanity.</p>
+        </div>
+        <div class="grid-4">
+          <figure class="sacred-fig">
+            <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/8054c66a-751a-47d3-b4fd-745fcc0fbba5/jesus.jpg" alt="Jesus Christ ﷺ">
+            <figcaption>Jesus Christ ﷺ</figcaption>
+          </figure>
+          <figure class="sacred-fig">
+            <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/98904c91-a1a1-4780-9b38-1549d63fcb2e/moses-sculpture.jpg" alt="Moses ﷺ">
+            <figcaption>Moses ﷺ</figcaption>
+          </figure>
+          <figure class="sacred-fig">
+            <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/c09e347c-d142-4415-8e4f-d632a3477bfd/krishna.jpg" alt="Lord Krishna">
+            <figcaption>Lord Krishna</figcaption>
+          </figure>
+          <figure class="sacred-fig">
+            <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/5fa5c122-4eed-4f71-9771-55f429563580/guru-nanak.jpg" alt="Guru Nanak">
+            <figcaption>Guru Nanak</figcaption>
+          </figure>
+        </div>
+        <div class="text-center mt-10">
+          <a href="#gallery" style="font-weight: 500;">View the full sacred gallery →</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="position: relative;">
+      <div style="position: absolute; inset: 0; z-index: -1; opacity: 0.15;">
+        <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/80efcda4-5187-4f75-8dda-20bfe7714d8c/sufi-dancer.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <div class="container">
+        <div class="card text-center" style="max-width: 48rem; margin: 0 auto; background: rgba(253, 252, 250, 0.9); backdrop-filter: blur(8px);">
+          <h2 class="text-4xl">Begin Your Healing Journey</h2>
+          <p class="mt-4 text-muted-foreground">For the lost souls, the wounded hearts, and seekers of inner light — a session awaits.</p>
+          <a href="mailto:magellanicconnect@gmail.com" class="btn btn-primary mt-8">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            magellanicconnect@gmail.com
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="about">
+    <section>
+      <div class="container two-col">
+        <div>
+          <div class="section-label">The Healer</div>
+          <h1 class="text-5xl mt-2">Saint Tajammal</h1>
+          <p class="mt-6 text-lg leading-relaxed text-muted-foreground">Based in Islamabad, Pakistan, Saint Tajammal has devoted his life to the inner sciences of spirit — the quiet art of listening to revelation and directing its healing frequency to those who suffer, wherever they may be in the world.</p>
+          <p class="mt-4 text-muted-foreground leading-relaxed">His practice is anchored in the four revealed books — the <em>Torah</em>, the <em>Zabur</em>, the <em>Injeel</em>, and the Holy <em>Qur'an</em>. The verses themselves are the medicine; the healer is only the vessel through which they travel.</p>
+        </div>
+        <figure class="rounded">
+          <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/157a6798-5b14-447d-9ceb-2cf3fc8ca813/saint-tajammal-1.jpg" alt="Saint Tajammal" style="width: 100%; aspect-ratio: 4/5; object-fit: cover;">
+        </figure>
+      </div>
+    </section>
+
+    <section class="bg-muted border-y">
+      <div class="container" style="max-width: 48rem;">
+        <div class="text-center mb-12">
+          <div class="section-label">Philosophy</div>
+          <h2 class="text-4xl mt-2">Quantum Entanglement</h2>
+        </div>
+        <div style="font-size: 1.1rem; line-height: 1.8; color: var(--foreground); opacity: 0.9;">
+          <p>Modern physics tells us that two particles, once entangled, remain connected across any distance — what happens to one is instantly mirrored in the other. The mystics have always known this. The soul, too, is entangled — with its Source, with the prophets who carried the Word, and with every other awakened heart.</p>
+          <p class="mt-4">In a remote healing session, no distance is real. A phone call from Islamabad to anywhere on Earth is enough, because the verses do not travel through wires — they travel through the entangled fabric of being.</p>
+          <blockquote style="border-left: 4px solid var(--accent); padding-left: 1.5rem; margin-top: 1.5rem; color: var(--primary);">
+            "The spirit of man is the lamp of the Lord, searching all the inward parts of the belly."
+            <footer style="color: var(--muted-foreground); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; margin-top: 0.5rem;">— Proverbs 20:27</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container two-col">
+        <figure class="rounded" style="order: 2;">
+          <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/b3db7b36-f414-4af7-9e89-886cea335f5d/saint-tajammal-2.jpg" alt="Saint Tajammal" style="width: 100%; aspect-ratio: 4/5; object-fit: cover;">
+        </figure>
+        <div style="order: 1;">
+          <div class="section-label">A Path of Service</div>
+          <h2 class="text-4xl mt-2">For the Lost Soul</h2>
+          <p class="mt-6 text-muted-foreground leading-relaxed">Saint Tajammal serves those whose suffering is invisible to medicine — the heaviness of grief, the unrest of a troubled mind, the spiritual ache that has no name. There is no judgement here, only the patient work of returning the soul to its tuning.</p>
+          <p class="mt-4 text-muted-foreground leading-relaxed">Sessions are private, dignified, and conducted in confidence over the phone.</p>
+          <a href="mailto:magellanicconnect@gmail.com" class="btn btn-primary mt-8">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Request a Session
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-muted border-t text-center">
+      <div class="container">
+        <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/318b4789-83ab-44c2-9fb4-0165d6afe224/ship.jpg" alt="" style="margin: 0 auto; width: 100%; max-width: 28rem; border-radius: 1rem; opacity: 0.8; box-shadow: 0 10px 40px -10px rgba(139, 90, 43, 0.15);">
+        <p class="mt-8 font-display text-2xl italic max-w-2xl mx-auto" style="color: var(--foreground); opacity: 0.9;">"Consolation for the lost soul — a vessel sails the inner seas, and the light of the verses is its compass."</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- GALLERY -->
+  <div id="gallery">
+    <section>
+      <div class="container">
+        <div class="text-center mb-12">
+          <div class="section-label">Sacred Gallery</div>
+          <h1 class="text-5xl mt-2">Messengers &amp; Symbols of the Light</h1>
+          <p class="mt-4 text-muted-foreground max-w-2xl mx-auto">One truth, refracted through many lamps. Each image is a doorway into a different chamber of the same boundless mercy.</p>
+        </div>
+        <div class="grid-3">
+          <div class="gallery-item">
+            <div class="aspect"><img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/d7e391a9-81c2-4a38-9f73-47b95fd2fa23/moses-tree.jpg" alt="The Burning Tree"></div>
+            <div class="gallery-caption">
+              <h3>The Burning Tree</h3>
+              <p>Moses ﷺ before the radiant tree on Mount Sinai.</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="aspect"><img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/8054c66a-751a-47d3-b4fd-745fcc0fbba5/jesus.jpg" alt="Jesus Christ ﷺ"></div>
+            <div class="gallery-caption">
+              <h3>Jesus Christ ﷺ</h3>
+              <p>Salvator Mundi — Saviour of the World.</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="aspect"><img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/98904c91-a1a1-4780-9b38-1549d63fcb2e/moses-sculpture.jpg" alt="Moses ﷺ"></div>
+            <div class="gallery-caption">
+              <h3>Moses ﷺ</h3>
+              <p>Michelangelo's sculpture of the lawgiver.</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="aspect"><img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/c09e347c-d142-4415-8e4f-d632a3477bfd/krishna.jpg" alt="Lord Krishna"></div>
+            <div class="gallery-caption">
+              <h3>Lord Krishna</h3>
+              <p>The flute that called every heart home.</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="aspect"><img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/5fa5c122-4eed-4f71-9771-55f429563580/guru-nanak.jpg" alt="Guru Nanak"></div>
+            <div class="gallery-caption">
+              <h3>Guru Nanak</h3>
+              <p>Founder of the Sikh path — Ik Onkar, One Light.</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="aspect"><img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/80efcda4-5187-4f75-8dda-20bfe7714d8c/sufi-dancer.jpg" alt="Whirling Dervish"></div>
+            <div class="gallery-caption">
+              <h3>Let Him Show You the Way</h3>
+              <p>The whirling dervish — surrender as medicine.</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="aspect"><img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/9e300efd-3fba-4fc6-859a-e3927721b01d/allah.jpg" alt="Allah"></div>
+            <div class="gallery-caption">
+              <h3>Allah</h3>
+              <p>The Most Merciful, the Most Compassionate.</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="aspect"><img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/318b4789-83ab-44c2-9fb4-0165d6afe224/ship.jpg" alt="Ship"></div>
+            <div class="gallery-caption">
+              <h3>Consolation for the Lost Soul</h3>
+              <p>A vessel for the inner voyage.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="contact">
+    <section>
+      <div class="container" style="max-width: 60rem;">
+        <div class="text-center mb-12">
+          <div class="section-label">Book a Session</div>
+          <h1 class="text-5xl mt-2">Reach Out</h1>
+          <p class="mt-4 text-muted-foreground max-w-2xl mx-auto">All sessions are remote, conducted over the phone, and held in confidence.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card gradient-warm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <h2 class="text-3xl mt-4">Email for Booking</h2>
+            <p class="text-muted-foreground mt-2">Share your name, country, and a brief note on what you seek.</p>
+            <a href="mailto:magellanicconnect@gmail.com" class="btn btn-primary mt-6 break-all" style="font-size: 0.9rem;">
+              magellanicconnect@gmail.com
+            </a>
+          </div>
+          <div class="card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+            <h2 class="text-3xl mt-4">Based In</h2>
+            <p class="text-muted-foreground mt-2">Islamabad, Pakistan — serving seekers across the world remotely.</p>
+            <div class="mt-6 flex items-start gap-3 text-sm text-muted-foreground">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 0.15rem;"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+              <p>Healing is channelled through the revealed verses of the Torah, Zabur, Injeel and the Holy Qur'an.</p>
+            </div>
+          </div>
+        </div>
+        <figure class="mt-16 rounded">
+          <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/80efcda4-5187-4f75-8dda-20bfe7714d8c/sufi-dancer.jpg" alt="Whirling dervish" style="width: 100%; height: 18rem; object-fit: cover;">
+        </figure>
+        <blockquote class="text-center mt-12" style="max-width: 42rem; margin-left: auto; margin-right: auto;">
+          "And We send down of the Qur'an that which is healing and mercy for the believers."
+          <footer>— Qur'an 17:82</footer>
+        </blockquote>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--primary);">Quantum Entanglement Healing</h4>
+        <p class="italic mt-2">"He heals the brokenhearted and binds up their wounds." — Psalm 147:3</p>
+      </div>
+      <div>
+        <h4>Healer</h4>
+        <p>Saint Tajammal<br>Islamabad, Pakistan</p>
+      </div>
+      <div>
+        <h4>Book a Session</h4>
+        <a href="mailto:magellanicconnect@gmail.com" class="inline-flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          magellanicconnect@gmail.com
+        </a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 Quantum Entanglement Healing — For the lost souls and seekers of light.</div>
+  </footer>
+
+</body>
+</html>
