@@ -384,6 +384,14 @@
       box-shadow: 0 4px 24px rgba(139,90,43,0.08), 0 1px 4px rgba(0,0,0,0.04);
       will-change: transform;
     }
+
+    /* Re‑usable glass card utility */
+    .glass-card {
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+    }
+
     :root[data-theme="dark"] .card {
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 20px 60px rgba(0,0,0,0.35);
     }
@@ -2081,12 +2089,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
   </button>
 
-  <!-- Ambient Player -->
-  <button class="ambient-player-btn" id="ambientToggleBtn" aria-label="Toggle Meditative Ambient Sound">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="play-icon"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pause-icon" style="display:none;"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>
-    <span class="ambient-player-text">Ambient Hum</span>
-  </button>
+  // Ambient player button removed as per user request
 
   <!-- Lightbox Modal -->
   <div class="lightbox" id="lightboxModal" role="dialog" aria-modal="true" aria-hidden="true" style="display:none;">
@@ -2221,164 +2224,7 @@
       if (progressBar) progressBar.style.width = scrolled + '%';
     }, { passive: true });
 
-    /* ===== AMBIENT AUDIO SYNTHESIZER ===== */
-    let audioCtx = null;
-    let droneOsc1 = null;
-    let droneOsc2 = null;
-    let bowlOsc = null;
-    let mainGain = null;
-    let isPlayingAmbient = false;
-
-    const ambientToggleBtn = document.getElementById('ambientToggleBtn');
-    const playIcon = ambientToggleBtn.querySelector('.play-icon');
-    const pauseIcon = ambientToggleBtn.querySelector('.pause-icon');
-
-    function initAmbientAudio() {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      mainGain = audioCtx.createGain();
-      mainGain.gain.setValueAtTime(0, audioCtx.currentTime);
-      mainGain.connect(audioCtx.destination);
-
-      // Deep healing drone (136.1Hz Ohm base — pure, no vibration)
-      droneOsc1 = audioCtx.createOscillator();
-      const droneOsc3 = audioCtx.createOscillator();
-      const filter = audioCtx.createBiquadFilter();
-
-      droneOsc1.type = 'sine';
-      droneOsc1.frequency.setValueAtTime(136.1, audioCtx.currentTime);
-
-      droneOsc3.type = 'sine';
-      droneOsc3.frequency.setValueAtTime(272.2, audioCtx.currentTime); // Octave up
-
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(350, audioCtx.currentTime);
-
-      const droneGain = audioCtx.createGain();
-      droneGain.gain.setValueAtTime(0.30, audioCtx.currentTime);
-
-      droneOsc1.connect(droneGain);
-      droneOsc3.connect(droneGain);
-      droneGain.connect(filter);
-      filter.connect(mainGain);
-
-      // Singing bowl resonance harmonic (272.2Hz) — pure, steady tone
-      bowlOsc = audioCtx.createOscillator();
-      bowlOsc.type = 'sine';
-      bowlOsc.frequency.setValueAtTime(272.2, audioCtx.currentTime);
-
-      const bowlGain = audioCtx.createGain();
-      bowlGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-
-      bowlOsc.connect(bowlGain);
-      bowlGain.connect(mainGain);
-
-      droneOsc1.start();
-      droneOsc3.start();
-      bowlOsc.start();
-    }
-
-    /* ===== WIND CHIME SYNTHESIZER ===== */
-    // Pentatonic-scale frequencies for a harmonious chime set (Hz)
-    const CHIME_FREQS = [1174.66, 1318.51, 1479.98, 1760.00, 1975.53, 2093.00, 2349.32, 2637.02];
-    let chimeInterval = null;
-
-    function playChimeTone(freq, delaySeconds, volume) {
-      if (!audioCtx) return;
-      const now = audioCtx.currentTime + delaySeconds;
-
-      // Pure sine bell tone — clean, no vibration
-      const osc = audioCtx.createOscillator();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now);
-
-      // Gain envelope: sharp attack, smooth exponential decay
-      const gainNode = audioCtx.createGain();
-      gainNode.gain.setValueAtTime(0, now);
-      gainNode.gain.linearRampToValueAtTime(volume, now + 0.008);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 3.2);
-
-      // Soft reverb echo
-      const delay = audioCtx.createDelay(0.5);
-      delay.delayTime.setValueAtTime(0.22, now);
-      const delayGain = audioCtx.createGain();
-      delayGain.gain.setValueAtTime(0.10, now);
-
-      osc.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-      gainNode.connect(delay);
-      delay.connect(delayGain);
-      delayGain.connect(audioCtx.destination);
-
-      osc.start(now);
-      osc.stop(now + 3.5);
-    }
-
-    function playChimeCascade() {
-      // Play 5–7 chimes with staggered timing
-      const count = 5 + Math.floor(Math.random() * 3);
-      for (let i = 0; i < count; i++) {
-        const freq = CHIME_FREQS[Math.floor(Math.random() * CHIME_FREQS.length)];
-        const delay = i * (0.18 + Math.random() * 0.22);
-        const vol  = 0.05 + Math.random() * 0.04; // soft cascade
-        playChimeTone(freq, delay, vol);
-      }
-    }
-
-    function playSingleChime() {
-      const freq = CHIME_FREQS[Math.floor(Math.random() * CHIME_FREQS.length)];
-      const vol  = 0.04 + Math.random() * 0.03; // very quiet single chime
-      playChimeTone(freq, 0, vol);
-    }
-
-    function startRandomChimes() {
-      stopRandomChimes();
-      function scheduleNext() {
-        const wait = (4 + Math.random() * 9) * 1000; // 4–13 seconds between hits
-        chimeInterval = setTimeout(() => {
-          if (isPlayingAmbient) {
-            playSingleChime();
-            scheduleNext();
-          }
-        }, wait);
-      }
-      scheduleNext();
-    }
-
-    function stopRandomChimes() {
-      if (chimeInterval) {
-        clearTimeout(chimeInterval);
-        chimeInterval = null;
-      }
-    }
-
-    ambientToggleBtn.addEventListener('click', () => {
-      if (!audioCtx) {
-        initAmbientAudio();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
-      if (!isPlayingAmbient) {
-        mainGain.gain.linearRampToValueAtTime(0.28, audioCtx.currentTime + 3.0); // soft, gentle fade in
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'block';
-        ambientToggleBtn.classList.add('playing');
-        isPlayingAmbient = true;
-        // Play opening chime cascade then schedule random chimes
-        playChimeCascade();
-        setTimeout(startRandomChimes, 2500);
-      } else {
-        mainGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-        playIcon.style.display = 'block';
-        pauseIcon.style.display = 'none';
-        ambientToggleBtn.classList.remove('playing');
-        isPlayingAmbient = false;
-        stopRandomChimes();
-        // Play a gentle farewell chime
-        playSingleChime();
-      }
-    });
+    /* Ambient audio feature removed as per user request – all related code eliminated. */
 
     /* ===== BOX BREATHING WIDGET ===== */
     const breathingCircle = document.getElementById('breathingCircle');
