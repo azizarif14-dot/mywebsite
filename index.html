@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
+      /* LIGHT THEME (Default) */
       --background: #faf6ef;
       --foreground: #2d2318;
       --muted-foreground: #6b5d4d;
@@ -19,9 +20,35 @@
       --primary-end: #c4953f;
       --primary-gradient: linear-gradient(135deg, #8b5a2b, #c4953f);
       --border: #e0d6c8;
+      --shadow: rgba(139, 90, 43, 0.12);
+      --glow-opacity: 0;
+      --caption-bg: linear-gradient(to top, rgba(250, 246, 239, 0.98) 0%, rgba(250, 246, 239, 0.8) 60%, transparent 100%);
+      --gallery-caption-bg: linear-gradient(to top, rgba(250, 246, 239, 0.95), rgba(250, 246, 239, 0.8));
+      --footer-bg: rgba(240, 235, 227, 0.65);
+      --header-bg: rgba(250, 246, 239, 0.85);
+      
       --radius: 1rem;
       --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-serif: "Playfair Display", Georgia, serif;
+    }
+
+    :root[data-theme="dark"] {
+      /* DARK THEME */
+      --background: #0B0F19;
+      --foreground: #F3F4F6;
+      --muted-foreground: #9CA3AF;
+      --card: rgba(17, 24, 39, 0.55);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #F97316;
+      --primary-end: #EF4444;
+      --primary-gradient: linear-gradient(135deg, #F97316, #EF4444);
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: rgba(0, 0, 0, 0.5);
+      --glow-opacity: 0.15;
+      --caption-bg: linear-gradient(to top, rgba(11, 15, 25, 0.95) 0%, rgba(11, 15, 25, 0.7) 60%, transparent 100%);
+      --gallery-caption-bg: linear-gradient(to top, rgba(11, 15, 25, 0.9), rgba(11, 15, 25, 0.7));
+      --footer-bg: rgba(8, 11, 20, 0.85);
+      --header-bg: rgba(11, 15, 25, 0.75);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,7 +56,8 @@
     html {
       scroll-behavior: smooth;
       scrollbar-width: thin;
-      scrollbar-color: rgba(139, 90, 43, 0.3) var(--background);
+      scrollbar-color: var(--primary) var(--background);
+      transition: scrollbar-color 0.3s;
     }
 
     body {
@@ -40,10 +68,28 @@
       overflow-x: hidden;
       position: relative;
       background-image:
-        radial-gradient(circle at 20% 10%, rgba(200, 160, 100, 0.15), transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(180, 140, 80, 0.12), transparent 55%);
+        radial-gradient(circle at 20% 10%, rgba(200, 160, 100, 0.1), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(180, 140, 80, 0.08), transparent 55%);
       background-attachment: fixed;
+      transition: background-color 0.3s ease, color 0.3s ease, background-image 0.3s ease;
     }
+
+    /* Background glow decorations (Active only in Dark Mode) */
+    .bg-glow {
+      position: absolute;
+      width: 40vw;
+      height: 40vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, rgba(239, 68, 68, 0.05) 50%, transparent 100%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: -2;
+      opacity: var(--glow-opacity);
+      transition: opacity 0.3s ease;
+    }
+    .glow-1 { top: 5%; left: -10%; }
+    .glow-2 { top: 40%; right: -10%; }
+    .glow-3 { bottom: 10%; left: 10%; }
 
     h1, h2, h3, h4 {
       font-weight: 700;
@@ -75,9 +121,9 @@
       z-index: 100;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      background: rgba(250, 246, 239, 0.85);
+      background: var(--header-bg);
       border-bottom: 1px solid var(--card-border);
-      transition: background 0.3s;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
     .header-inner {
       max-width: 72rem;
@@ -98,6 +144,7 @@
       line-height: 1.1;
       display: flex;
       flex-direction: column;
+      transition: background-image 0.3s ease;
     }
     .brand-sub {
       font-size: 0.65rem;
@@ -109,12 +156,21 @@
       background: none;
       -webkit-background-clip: initial;
       background-clip: initial;
+      transition: color 0.3s ease;
     }
+    
+    .nav-container {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    
     nav { display: flex; gap: 2rem; font-size: 0.9rem; font-weight: 500; }
     nav a {
       color: var(--muted-foreground);
       position: relative;
       padding: 0.25rem 0;
+      transition: color 0.3s ease;
     }
     nav a:hover, nav a.active {
       color: var(--foreground);
@@ -131,6 +187,40 @@
     }
     nav a:hover::after, nav a.active::after {
       width: 100%;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      background: rgba(139, 90, 43, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--foreground);
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+    }
+    .theme-toggle-btn:hover {
+      background: rgba(139, 90, 43, 0.1);
+      transform: scale(1.05);
+    }
+    
+    /* Dynamic theme icon visibility */
+    .sun-icon { display: block; }
+    .moon-icon { display: none; }
+    
+    :root[data-theme="dark"] .sun-icon { display: none; }
+    :root[data-theme="dark"] .moon-icon { display: block; }
+    :root[data-theme="dark"] .theme-toggle-btn {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    :root[data-theme="dark"] .theme-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.10);
     }
 
     /* Mobile menu button */
@@ -158,6 +248,7 @@
         padding: 1.5rem;
         gap: 1.25rem;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
       }
       nav.show { display: flex; }
     }
@@ -180,6 +271,11 @@
       text-transform: uppercase;
       letter-spacing: 0.15em;
       color: var(--primary);
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+    :root[data-theme="dark"] .badge {
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.25);
     }
 
     .text-gradient {
@@ -187,6 +283,7 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      transition: background-image 0.3s ease;
     }
 
     .btn {
@@ -210,14 +307,15 @@
     }
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px -5px rgba(139, 90, 43, 0.35);
+      box-shadow: 0 10px 20px -5px var(--shadow);
       opacity: 0.95;
     }
     .btn-outline {
-      background: rgba(253, 252, 250, 0.6);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       color: var(--foreground);
       backdrop-filter: blur(4px);
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
     }
     .btn-outline:hover {
       background: var(--card);
@@ -232,17 +330,21 @@
       padding: 2.25rem;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 10px 40px -10px rgba(139, 90, 43, 0.12);
+      transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 10px 40px -10px var(--shadow);
     }
     .card:hover {
       transform: translateY(-4px);
       border-color: var(--primary);
-      box-shadow: 0 15px 35px -10px rgba(139, 90, 43, 0.22);
+      box-shadow: 0 15px 35px -10px var(--shadow);
     }
 
     .gradient-warm {
       background: linear-gradient(135deg, rgba(250, 246, 239, 1), rgba(232, 218, 190, 0.6));
+      transition: background 0.3s ease;
+    }
+    :root[data-theme="dark"] .gradient-warm {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(17, 24, 39, 0.6));
     }
 
     /* Hero */
@@ -265,12 +367,16 @@
       height: 100%;
       object-fit: cover;
       opacity: 0.25;
+      transition: opacity 0.3s ease;
+    }
+    :root[data-theme="dark"] .hero-bg img {
+      opacity: 0.18;
     }
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, transparent 20%, var(--background) 90%),
-                  linear-gradient(to bottom, transparent, var(--background));
+      background: var(--hero-overlay);
+      transition: background 0.3s ease;
     }
     .hero h1 {
       font-size: clamp(2.5rem, 7vw, 4.75rem);
@@ -286,6 +392,7 @@
       margin: 1.5rem auto 0;
       line-height: 1.8;
       font-weight: 350;
+      transition: color 0.3s ease;
     }
     .hero-actions {
       display: flex;
@@ -304,6 +411,7 @@
       font-weight: 700;
       margin-bottom: 0.5rem;
       display: block;
+      transition: color 0.3s ease;
     }
 
     /* Grids */
@@ -331,8 +439,8 @@
       overflow: hidden;
       border-radius: 1.25rem;
       border: 1px solid var(--card-border);
-      box-shadow: 0 15px 35px -15px rgba(139, 90, 43, 0.15);
-      transition: border-color 0.3s;
+      box-shadow: 0 15px 35px -15px var(--shadow);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
     figure.rounded:hover {
       border-color: var(--primary);
@@ -351,6 +459,7 @@
       line-height: 1.6;
       color: var(--foreground);
       position: relative;
+      transition: color 0.3s ease;
     }
     blockquote::before {
       content: '“';
@@ -362,6 +471,10 @@
       font-size: 6rem;
       color: rgba(139, 90, 43, 0.12);
       line-height: 1;
+      transition: color 0.3s ease;
+    }
+    :root[data-theme="dark"] blockquote::before {
+      color: rgba(249, 115, 22, 0.15);
     }
     blockquote.left-aligned {
       text-align: left;
@@ -380,6 +493,7 @@
       letter-spacing: 0.2em;
       color: var(--primary);
       margin-top: 1.25rem;
+      transition: color 0.3s ease;
     }
 
     /* Gallery */
@@ -388,13 +502,13 @@
       overflow: hidden;
       background: var(--card);
       border: 1px solid var(--card-border);
-      box-shadow: 0 10px 30px -15px rgba(139, 90, 43, 0.15);
+      box-shadow: 0 10px 30px -15px var(--shadow);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .gallery-item:hover {
       transform: translateY(-4px);
       border-color: var(--primary);
-      box-shadow: 0 15px 35px -10px rgba(139, 90, 43, 0.2);
+      box-shadow: 0 15px 35px -10px var(--shadow);
     }
     .gallery-item .aspect {
       aspect-ratio: 4 / 5;
@@ -410,7 +524,8 @@
     .gallery-item:hover img { transform: scale(1.05); }
     .gallery-caption {
       padding: 1.5rem;
-      background: linear-gradient(to top, rgba(250, 246, 239, 0.95), rgba(250, 246, 239, 0.8));
+      background: var(--gallery-caption-bg);
+      transition: background-color 0.3s ease;
     }
     .gallery-caption h3 {
       font-size: 1.2rem;
@@ -421,6 +536,7 @@
       color: var(--muted-foreground);
       margin-top: 0.4rem;
       font-weight: 350;
+      transition: color 0.3s ease;
     }
 
     /* Sacred preview figures */
@@ -429,7 +545,7 @@
       overflow: hidden;
       border-radius: 1.25rem;
       border: 1px solid var(--card-border);
-      box-shadow: 0 10px 30px -15px rgba(139, 90, 43, 0.15);
+      box-shadow: 0 10px 30px -15px var(--shadow);
       aspect-ratio: 4 / 5;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -450,10 +566,11 @@
       left: 0;
       right: 0;
       padding: 2rem 1.25rem 1.25rem;
-      background: linear-gradient(to top, rgba(250, 246, 239, 0.98) 0%, rgba(250, 246, 239, 0.8) 60%, transparent 100%);
+      background: var(--caption-bg);
       font-size: 1.15rem;
       font-weight: 700;
       text-align: center;
+      transition: background-color 0.3s ease;
     }
 
     /* Testimonials styles */
@@ -478,6 +595,7 @@
       position: relative;
       margin-bottom: 1.5rem;
       font-weight: 350;
+      transition: color 0.3s ease;
     }
     .testimonial-author {
       font-weight: 600;
@@ -486,6 +604,7 @@
       border-top: 1px solid var(--card-border);
       padding-top: 1rem;
       margin-top: auto;
+      transition: color 0.3s ease, border-color 0.3s ease;
     }
     .testimonial-author span {
       display: block;
@@ -493,6 +612,7 @@
       font-size: 0.8rem;
       font-weight: 400;
       margin-top: 0.2rem;
+      transition: color 0.3s ease;
     }
 
     /* Pagination */
@@ -515,18 +635,26 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
     }
     .page-btn:hover {
       border-color: rgba(139, 90, 43, 0.4);
       color: var(--foreground);
       background: rgba(255, 255, 255, 0.9);
     }
+    :root[data-theme="dark"] .page-btn {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    :root[data-theme="dark"] .page-btn:hover {
+      border-color: rgba(249, 115, 22, 0.4);
+      color: var(--foreground);
+      background: rgba(255, 255, 255, 0.06);
+    }
     .page-btn.active {
       background: var(--primary-gradient);
       color: #FFFFFF;
       border-color: transparent;
-      box-shadow: 0 5px 15px -3px rgba(139, 90, 43, 0.4);
+      box-shadow: 0 5px 15px -3px var(--shadow);
     }
     .page-indicator {
       font-size: 0.85rem;
@@ -535,14 +663,16 @@
       display: block;
       text-align: center;
       font-weight: 500;
+      transition: color 0.3s ease;
     }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--card-border);
-      background: rgba(240, 235, 227, 0.65);
+      background: var(--footer-bg);
       padding: 4rem 1.5rem 2.5rem;
       backdrop-filter: blur(10px);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
     .footer-grid {
       display: grid;
@@ -560,11 +690,13 @@
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--primary);
+      transition: color 0.3s ease;
     }
     .footer-grid p, .footer-grid a {
       font-size: 0.9rem;
       color: var(--muted-foreground);
       line-height: 1.6;
+      transition: color 0.3s ease;
     }
     .footer-grid a:hover {
       color: var(--primary);
@@ -576,6 +708,7 @@
       margin-top: 3.5rem;
       padding-top: 2rem;
       border-top: 1px solid var(--card-border);
+      transition: color 0.3s ease, border-color 0.3s ease;
     }
 
     /* Animations */
@@ -612,7 +745,8 @@
     .italic { font-style: italic; }
     .border-y { border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); }
     .border-t { border-top: 1px solid var(--card-border); }
-    .bg-muted { background: rgba(139, 90, 43, 0.02); }
+    .bg-muted { background: rgba(139, 90, 43, 0.02); transition: background-color 0.3s ease; }
+    :root[data-theme="dark"] .bg-muted { background: rgba(255, 255, 255, 0.015); }
     .break-all { word-break: break-all; }
     .flex { display: flex; }
     .items-start { align-items: flex-start; }
@@ -629,6 +763,11 @@
 </head>
 <body>
 
+  <!-- Decorative blur spots (Visible in dark mode) -->
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+  <div class="bg-glow glow-3"></div>
+
   <!-- HEADER -->
   <header>
     <div class="header-inner">
@@ -638,14 +777,23 @@
           <span class="brand-sub">Healing</span>
         </div>
       </a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
-      <nav id="navMenu">
-        <a href="#home" class="active">Home</a>
-        <a href="#about">About</a>
-        <a href="#testimonials">Testimonials</a>
-        <a href="#gallery">Sacred Gallery</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <div class="nav-container">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+        <nav id="navMenu">
+          <a href="#home" class="active">Home</a>
+          <a href="#about">About</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#gallery">Sacred Gallery</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <!-- Theme Toggle Button -->
+        <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Theme">
+          <!-- Sun Icon (Active in Light Theme) -->
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <!-- Moon Icon (Active in Dark Theme) -->
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -658,7 +806,7 @@
       </div>
       <div class="container">
         <div class="badge mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
           Remote Distance Healing · Islamabad
         </div>
         <h1>Quantum Entanglement <span class="text-gradient font-serif">Healing</span></h1>
@@ -839,7 +987,7 @@
     <!-- INNER SEAS QUOTE -->
     <section class="bg-muted border-t text-center">
       <div class="container">
-        <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/318b4789-83ab-44c2-9fb4-0165d6afe224/ship.jpg" alt="Ship sailing on the sea" style="margin: 0 auto; width: 100%; max-width: 30rem; border-radius: 1rem; opacity: 0.7; box-shadow: 0 15px 35px -15px rgba(139, 90, 43, 0.15);">
+        <img src="https://id-preview--637431bf-dbf8-4ee1-a45b-cb1c6e6d6d8f.lovable.app/__l5e/assets-v1/318b4789-83ab-44c2-9fb4-0165d6afe224/ship.jpg" alt="Ship sailing on the sea" style="margin: 0 auto; width: 100%; max-width: 30rem; border-radius: 1rem; opacity: 0.7; box-shadow: 0 15px 35px -15px var(--shadow);">
         <p class="mt-8 font-serif text-2xl italic max-w-2xl mx-auto" style="color: var(--foreground);">"Consolation for the lost soul — a vessel sails the inner seas, and the Light is its compass."</p>
       </div>
     </section>
@@ -892,12 +1040,12 @@
           <div class="card testimonial-card">
             <p class="testimonial-quote">"I had developed black spots inside my mouth, and a clinical investigation by my doctor suggested that it was mouth cancer on one side. I became deeply worried, as I did not have the money required for the treatment at a hospital. A friend advised me to contact Mr. Tajammal by phone. While we were talking, Mr. Tajammal told me that I actually had cancer on both sides inside my mouth! This was very astonishing to me, as he had not even met me yet. He told me to wait for five days and then have the doctor check it again. After five days, I visited the doctor, who told me that the cancerous black spots inside my mouth had greatly reduced. The doctor could not believe it and kept asking me what I had done to cure the cancer. Now, by the grace of God, I am fully cured, and I thank Mr. Tajammal for his spiritual connection through which I was healed in time."</p>
             <div class="testimonial-author">
-             Rana Adnan
+              Amir Bhutta
               <span>Multan, Pakistan</span>
             </div>
           </div>
           <div class="card testimonial-card">
-            <p class="testimonial-quote">"My name is Hurmat Yaz Khan, and I am a PMS officer from KPK. I was posted in Swat for the last ten years, and no one was ready to transfer me out of there. Consequently, I made up my mind to leave the service and move to England. However, making that move became difficult for me as well, which left me mentally disturbed and deeply frustrated. Then, someone told me about the respected Mr. Tajammal. I spoke to him over the phone, and he assured me that I would get settled in Peshawar instead of having to go abroad; he also advised me not to leave the service. Now, I am posted in Peshawar and I am very happy. Thanks, Sir Tajammal for giving me the guidance I needed."</p>
+            <p class="testimonial-quote">"My name is Hurmat Yaz Khan, and I am a PMS officer from KPK. I was posted in Swat for the last ten years, and no one was ready to transfer me out of there. Consequently, I made up my mind to leave the service and move to England. However, making that move became difficult for me as well, which left me mentally disturbed and deeply frustrated. Then, someone told me about the respected Mr. Tajammal Hussain. I spoke to him over the phone, and he assured me that I would get settled in Peshawar instead of having to go abroad; he also advised me not to leave the service. Now, I am posted in Peshawar and I am very happy. Thanks, Sir Tajammal for giving me the guidance I needed."</p>
             <div class="testimonial-author">
               Hurmat Yaz Khan
               <span>Peshawar, KPK, Pakistan</span>
@@ -1097,6 +1245,26 @@
 
     btnPage1.addEventListener('click', () => showPage(1));
     btnPage2.addEventListener('click', () => showPage(2));
+
+    // Theme Toggle Functionality
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    // Determine and apply initial theme
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
   </script>
 
 </body>
